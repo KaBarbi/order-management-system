@@ -1,6 +1,6 @@
 from cliente import Cliente
-
+from item import Item
 
 cliente = Cliente("kleber", "SP")
-print(cliente.nome)
-print(cliente.endereco)
+item_um = Item("Pizza", 30.0)
+item_dois = Item("Regrigerante", 5.0)
