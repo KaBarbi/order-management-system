@@ -4,6 +4,7 @@ from pedido.pedido_retirada import PedidoRetirada
 from pedido.pedido_delivery import PedidoDelivery
 from pagamento.pagamento_cartao import PagamentoCartao
 from pagamento.pagamento_pix import PagamentoPIX
+from pagamento.pagamento_factory import PagamentoFactory
 
 
 cliente = Cliente("kleber", "SP")
@@ -17,6 +18,9 @@ taxa_entrega = 10.0
 pedido_delivery = PedidoDelivery(cliente, itens, taxa_entrega)
 
 valor_pedido = pedido_delivery.calcular_total()
-pagamento_cartao = PagamentoCartao().processar(valor_pedido)
-pagamento_pix = PagamentoPIX()
-pagamento_pix.processar(valor_pedido)
+# pagamento_cartao = PagamentoCartao().processar(valor_pedido)
+# pagamento_pix = PagamentoPIX()
+# pagamento_pix.processar(valor_pedido)
+
+tipo_pagamento = "pix"
+pagamento = PagamentoFactory
