@@ -6,6 +6,7 @@ class Pedido(ABC):
         self.cliente = cliente
         self.itens = itens
         self._status = "Criado!"
+        self.observadores = []
 
     @property
     def status(self):
@@ -14,8 +15,15 @@ class Pedido(ABC):
     @status.setter
     def status(self, novo_status):
         self._status = novo_status
-        print(f"Onovo statrus é: {self._status}")
+        self.notificar_observadores
 
     @abstractmethod
     def calcular_total(self):
         pass
+
+    def adicionar_observadores(self, observador):
+        self.observadores.append(observador)
+
+    def notificar_observadores(self):
+        for observador in self.observadores:
+            observador.atualizar(self)
