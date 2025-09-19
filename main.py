@@ -9,27 +9,30 @@ from notificacao.notificacao_email import NotificacaoEmail
 from notificacao.notificacao_sms import NotificacaoSms
 from notificacao.notificacao_facade import NotificacaoFacade
 
-
-cliente = Cliente("kleber", "SP")
+# Criando cliente e itens
+cliente = Cliente("Kleber", "SP")
 item_um = Item("Pizza", 30.0)
-item_dois = Item("Regrigerante", 5.0)
+item_dois = Item("Refrigerante", 5.0)
 itens = [item_um, item_dois]
 
+# Criando pedidos
 pedido_retirada = PedidoRetirada(cliente, itens)
-
 taxa_entrega = 10.0
 pedido_delivery = PedidoDelivery(cliente, itens, taxa_entrega)
 
+# Calculando valor total do pedido
 valor_pedido = pedido_delivery.calcular_total()
-# pagamento_cartao = PagamentoCartao().processar(valor_pedido)
-# pagamento_pix = PagamentoPIX()
-# pagamento_pix.processar(valor_pedido)
 
+# Processando pagamento usando Factory
 tipo_pagamento = "pix"
-pagamento = PagamentoFactory
+pagamento = PagamentoFactory().criar_pagamento(tipo_pagamento)
+pagamento.processar(valor_pedido)
 
+# Enviando notificações usando Facade
 MENSAGEM = "Seu pedido saiu para entrega!"
-# notificacao_email = NotificacaoEmail().enviar_notificacao(cliente, MENSAGEM)
-# notificacao_sms = NotificacaoSMS().enviar_notificacao(cliente, MENSAGEM)
+notificacao_facade = NotificacaoFacade()
+notificacao_facade.enviar_notificacoes(cliente, MENSAGEM)
 
-notificacoes = NotificacaoFacade().enviar_notificacoes(cliente, MENSAGEM)
+# Atualizando status do pedido e notificando novamente
+pedido_delivery.status = "Pedido confirmado!"
+notificacao_facade.enviar_notificacoes(cliente, pedido_delivery.status)

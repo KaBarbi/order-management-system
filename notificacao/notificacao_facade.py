@@ -4,7 +4,7 @@ from notificacao.notificacao_sms import NotificacaoSms
 
 class NotificacaoFacade:
     def __init__(self):
-        self.notificacoes - [NotificacaoEmail(), NotificacaoSms()]
+        self.notificacoes = [NotificacaoEmail(), NotificacaoSms()]
 
     def enviar_notificacoes(self, cliente, mensagem):
         for notificacao in self.notificacoes:
